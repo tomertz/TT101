@@ -24,6 +24,17 @@ ERROR_MESSAGE = (
     "Valid units: " + ", ".join(CONVERSIONS)
 )
 
+STARTUP_SCREEN = """\
+Unit Converter - available conversions:
+  lb (pounds)           <->  kg (kilograms)
+  oz (US fluid ounces)  <->  ml (milliliters)
+  mi (miles)            <->  km (kilometers)
+  ft (feet)             <->  m  (meters)
+  in (inches)           <->  cm (centimeters)
+
+Enter a number and a unit, e.g. 100 mi. Type q to quit.
+"""
+
 
 def convert(text: str) -> str | None:
     """Return the converted result, or None if the input is invalid."""
@@ -62,9 +73,10 @@ def wait_for_key() -> None:
 
 
 def main() -> None:
+    print(STARTUP_SCREEN)
     while True:
         try:
-            text = input("Enter a value and unit (q to quit): ").strip()
+            text = input("Enter a value and unit: ").strip()
         except (EOFError, KeyboardInterrupt):
             print()
             return

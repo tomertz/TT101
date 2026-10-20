@@ -1,6 +1,10 @@
+import io
 import unittest
+from contextlib import redirect_stdout
+from unittest import mock
 
-from converter import convert
+import converter
+from converter import CONVERSIONS, STARTUP_SCREEN, convert
 
 
 class RequirementsExamplesTest(unittest.TestCase):
@@ -67,6 +71,34 @@ class InvalidInputTest(unittest.TestCase):
         for text in cases:
             with self.subTest(text=text):
                 self.assertIsNone(convert(text))
+
+
+class StartupScreenTest(unittest.TestCase):
+    def run_main(self, inputs):
+        """Run the program with the given inputs and return the prompts and output."""
+        prompts = []
+
+        def fake_input(prompt):
+            prompts.append(prompt)
+            return inputs.pop(0)
+
+        output = io.StringIO()
+        with mock.patch("builtins.input", fake_input), \
+                mock.patch.object(converter, "wait_for_key"), \
+                redirect_stdout(output):
+            converter.main()
+        return prompts, output.getvalue()
+
+    def test_every_unit_is_listed(self):
+        for unit in CONVERSIONS:
+            with self.subTest(unit=unit):
+                self.assertRegex(STARTUP_SCREEN, rf"\b{unit} +\(")
+
+    def test_shown_once_before_first_prompt(self):
+        prompts, output = self.run_main(["100 mi", "abc", "q"])
+        self.assertTrue(output.startswith(STARTUP_SCREEN + "\n"))
+        self.assertEqual(output.count("available conversions"), 1)
+        self.assertEqual(prompts, ["Enter a value and unit: "] * 3)
 
 
 if __name__ == "__main__":

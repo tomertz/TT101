@@ -50,14 +50,32 @@ Each unit converts to exactly one paired unit, in both directions.
 | `12 oz` | `354.88 ml` |
 | `2.5 KG` | `5.51 lb` |
 
+## Startup screen
+
+When the program starts, it shows the following text once, followed by a blank line and the input prompt. Each line lists one pair of units that convert to each other in both directions.
+
+```
+Unit Converter - available conversions:
+  lb (pounds)           <->  kg (kilograms)
+  oz (US fluid ounces)  <->  ml (milliliters)
+  mi (miles)            <->  km (kilometers)
+  ft (feet)             <->  m  (meters)
+  in (inches)           <->  cm (centimeters)
+
+Enter a number and a unit, e.g. 100 mi. Type q to quit.
+```
+
+The startup screen isn't shown again after a conversion or an error.
+
 ## Program flow
 
-1. Prompt the user for input.
-2. If the user types `q` (any case) or presses Enter on an empty line, the app exits.
-3. If the input is valid, show the converted result.
-4. If the input is invalid, show the error message described below.
-5. Show `Press any key to continue...` and keep the result or error on screen until the user presses any key.
-6. Return to step 1.
+1. Show the startup screen. This step runs only once, when the program starts.
+2. Prompt the user for input with `Enter a value and unit:`.
+3. If the user types `q` (any case) or presses Enter on an empty line, the app exits.
+4. If the input is valid, show the converted result.
+5. If the input is invalid, show the error message described below.
+6. Show `Press any key to continue...` and keep the result or error on screen until the user presses any key.
+7. Return to step 2.
 
 ## Invalid input
 

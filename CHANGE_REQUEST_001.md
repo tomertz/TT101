@@ -6,7 +6,8 @@
 | **Date** | October 20, 2026 |
 | **Requested by** | tomertz |
 | **Applies to** | [REQUIREMENTS.md](REQUIREMENTS.md) |
-| **Status** | Proposed |
+| **Status** | Implemented |
+| **Approved** | October 20, 2026, by tomertz |
 
 ## Summary
 
