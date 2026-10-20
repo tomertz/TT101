@@ -1,8 +1,8 @@
 # Repository Setup Plan
 
-This plan lists the best-practice changes proposed for the [tomertz/TT101](https://github.com/tomertz/TT101) repository. Nothing in this plan has been done yet. Each item needs approval before it's carried out.
+This plan lists the best-practice changes proposed for the [tomertz/TT101](https://github.com/tomertz/TT101) repository. **Status:** All four items below have been completed.
 
-## Current state
+## State before setup
 
 | File | Status |
 |------|--------|
@@ -89,7 +89,7 @@ Each item will be its own commit, so each change can be reviewed or undone separ
 3. `Remove pound_to_kg.py, replaced by converter.py`
 4. `Add unit tests for converter`
 
-All four commits will be pushed to the `main` branch together once they're done. This plan file (`SETUP_PLAN.md`) is only for review and won't be committed unless you ask.
+All four commits will be pushed to the `main` branch together once they're done.
 
 ## Ongoing practices (no setup needed)
 
