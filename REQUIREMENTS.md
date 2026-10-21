@@ -11,7 +11,7 @@ A command-line unit conversion app written in Python. The user enters a number a
 
 Each unit converts to exactly one paired unit, in both directions.
 
-| Code | Unit | Converts to | Factor |
+| Code | Unit | Converts to | Conversion |
 |------|------|-------------|--------|
 | `lb` | pounds | `kg` | 1 lb = 0.45359237 kg |
 | `kg` | kilograms | `lb` | 1 kg = 1 / 0.45359237 lb (about 2.20462) |
@@ -23,12 +23,15 @@ Each unit converts to exactly one paired unit, in both directions.
 | `m` | meters | `ft` | 1 m = 1 / 0.3048 ft (about 3.28084) |
 | `in` | inches | `cm` | 1 in = 2.54 cm |
 | `cm` | centimeters | `in` | 1 cm = 1 / 2.54 in (about 0.393701) |
+| `c` | degrees Celsius | `f` | °F = °C × 9/5 + 32 |
+| `f` | degrees Fahrenheit | `c` | °C = (°F − 32) × 5/9 |
 
 ## Input
 
 - Format: `<number> <unit>`, for example `100 mi`.
 - The number may be a whole number or a decimal (for example `2.5`).
-- The number must be zero or greater. Negative numbers are invalid input.
+- For `c` and `f`, the number may be negative, but must not be below absolute zero (−273.15 for `c`, −459.67 for `f`).
+- For all other units, the number must be zero or greater. Negative numbers are invalid input.
 - The unit code must be one of the codes in the table above.
 - Unit codes are not case-sensitive: `100 MI`, `100 Mi`, and `100 mi` are equivalent.
 - Leading, trailing, and repeated spaces between the number and the unit are allowed (for example `100   mi`).
@@ -38,6 +41,7 @@ Each unit converts to exactly one paired unit, in both directions.
 - Format: `<converted value> <target unit>`, for example `160.93 km`.
 - The converted value is rounded to 2 decimal places and always shows 2 decimals (for example `254.00 cm`).
 - The target unit code is always shown in lowercase.
+- Temperature results can be negative. A result that rounds to zero shows as `0.00`, not `-0.00`.
 
 ## Examples
 
@@ -49,6 +53,9 @@ Each unit converts to exactly one paired unit, in both directions.
 | `1 in` | `2.54 cm` |
 | `12 oz` | `354.88 ml` |
 | `2.5 KG` | `5.51 lb` |
+| `100 c` | `212.00 f` |
+| `98.6 f` | `37.00 c` |
+| `-40 c` | `-40.00 f` |
 
 ## Startup screen
 
@@ -61,6 +68,7 @@ Unit Converter - available conversions:
   mi (miles)            <->  km (kilometers)
   ft (feet)             <->  m  (meters)
   in (inches)           <->  cm (centimeters)
+  c  (Celsius)          <->  f  (Fahrenheit)
 
 Enter a number and a unit, e.g. 100 mi. Type q to quit.
 ```
@@ -83,14 +91,15 @@ Input is invalid when any of the following is true:
 
 - It doesn't have exactly two parts: a number and a unit code.
 - The number part isn't a valid number.
-- The number is negative.
+- The number is negative and the unit isn't `c` or `f`.
+- The number is below absolute zero for `c` or `f`.
 - The unit code isn't in the supported units table.
 
 When input is invalid, the app shows:
 
 ```
 Invalid input. Use: <number> <unit>, e.g. 100 mi
-Valid units: lb, kg, oz, ml, mi, km, ft, m, in, cm
+Valid units: lb, kg, oz, ml, mi, km, ft, m, in, cm, c, f
 ```
 
 The app must not crash on invalid input.

@@ -4,7 +4,7 @@ from contextlib import redirect_stdout
 from unittest import mock
 
 import converter
-from converter import CONVERSIONS, STARTUP_SCREEN, convert
+from converter import CONVERSIONS, ERROR_MESSAGE, STARTUP_SCREEN, convert
 
 
 class RequirementsExamplesTest(unittest.TestCase):
@@ -71,6 +71,44 @@ class InvalidInputTest(unittest.TestCase):
         for text in cases:
             with self.subTest(text=text):
                 self.assertIsNone(convert(text))
+
+    def test_error_message_lists_every_unit(self):
+        self.assertTrue(ERROR_MESSAGE.endswith(
+            "Valid units: lb, kg, oz, ml, mi, km, ft, m, in, cm, c, f"))
+
+
+class TemperatureTest(unittest.TestCase):
+    def test_change_request_examples(self):
+        examples = {
+            "100 c": "212.00 f",
+            "0 c": "32.00 f",
+            "37 C": "98.60 f",
+            "32 f": "0.00 c",
+            "98.6 f": "37.00 c",
+            "-40 c": "-40.00 f",
+            "-10 f": "-23.33 c",
+            "-273.15 c": "-459.67 f",
+            "-459.67 f": "-273.15 c",
+        }
+        for text, expected in examples.items():
+            with self.subTest(text=text):
+                self.assertEqual(convert(text), expected)
+
+    def test_below_absolute_zero_is_invalid(self):
+        for text in ("-300 c", "-273.16 c", "-500 f", "-459.68 f"):
+            with self.subTest(text=text):
+                self.assertIsNone(convert(text))
+
+    def test_negative_still_invalid_for_other_units(self):
+        for unit in CONVERSIONS:
+            if unit in ("c", "f"):
+                continue
+            with self.subTest(unit=unit):
+                self.assertIsNone(convert(f"-5 {unit}"))
+
+    def test_result_rounding_to_zero_is_not_negative(self):
+        self.assertEqual(convert("31.999 f"), "0.00 c")
+        self.assertEqual(convert("-17.7778 c"), "0.00 f")
 
 
 class StartupScreenTest(unittest.TestCase):

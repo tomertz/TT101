@@ -5,18 +5,28 @@ OZ_TO_ML = 29.5735295625
 MI_TO_KM = 1.609344
 FT_TO_M = 0.3048
 IN_TO_CM = 2.54
+ABSOLUTE_ZERO_C = -273.15
+ABSOLUTE_ZERO_F = -459.67
 
+
+def scale(factor: float):
+    return lambda value: value * factor
+
+
+# unit: (target unit, conversion function, lowest allowed input)
 CONVERSIONS = {
-    "lb": ("kg", LB_TO_KG),
-    "kg": ("lb", 1 / LB_TO_KG),
-    "oz": ("ml", OZ_TO_ML),
-    "ml": ("oz", 1 / OZ_TO_ML),
-    "mi": ("km", MI_TO_KM),
-    "km": ("mi", 1 / MI_TO_KM),
-    "ft": ("m", FT_TO_M),
-    "m": ("ft", 1 / FT_TO_M),
-    "in": ("cm", IN_TO_CM),
-    "cm": ("in", 1 / IN_TO_CM),
+    "lb": ("kg", scale(LB_TO_KG), 0.0),
+    "kg": ("lb", scale(1 / LB_TO_KG), 0.0),
+    "oz": ("ml", scale(OZ_TO_ML), 0.0),
+    "ml": ("oz", scale(1 / OZ_TO_ML), 0.0),
+    "mi": ("km", scale(MI_TO_KM), 0.0),
+    "km": ("mi", scale(1 / MI_TO_KM), 0.0),
+    "ft": ("m", scale(FT_TO_M), 0.0),
+    "m": ("ft", scale(1 / FT_TO_M), 0.0),
+    "in": ("cm", scale(IN_TO_CM), 0.0),
+    "cm": ("in", scale(1 / IN_TO_CM), 0.0),
+    "c": ("f", lambda c: c * 9 / 5 + 32, ABSOLUTE_ZERO_C),
+    "f": ("c", lambda f: (f - 32) * 5 / 9, ABSOLUTE_ZERO_F),
 }
 
 ERROR_MESSAGE = (
@@ -31,6 +41,7 @@ Unit Converter - available conversions:
   mi (miles)            <->  km (kilometers)
   ft (feet)             <->  m  (meters)
   in (inches)           <->  cm (centimeters)
+  c  (Celsius)          <->  f  (Fahrenheit)
 
 Enter a number and a unit, e.g. 100 mi. Type q to quit.
 """
@@ -50,12 +61,12 @@ def convert(text: str) -> str | None:
         value = float(number_text)
     except ValueError:
         return None
-    if not math.isfinite(value) or value < 0:
+    target_unit, convert_value, minimum = CONVERSIONS[unit]
+    if not math.isfinite(value) or value < minimum:
         return None
 
-    target_unit, factor = CONVERSIONS[unit]
-    # Adding 0.0 turns -0.0 into 0.0 so "-0" doesn't print as "-0.00".
-    result = value * factor + 0.0
+    # Adding 0.0 turns -0.0 into 0.0 so results that round to zero don't print as "-0.00".
+    result = round(convert_value(value), 2) + 0.0
     return f"{result:.2f} {target_unit}"
 
 

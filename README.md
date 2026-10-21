@@ -16,6 +16,8 @@ A command-line app that converts a value between common imperial and metric unit
 | `m` (meters) | `ft` (feet) |
 | `in` (inches) | `cm` (centimeters) |
 | `cm` (centimeters) | `in` (inches) |
+| `c` (degrees Celsius) | `f` (degrees Fahrenheit) |
+| `f` (degrees Fahrenheit) | `c` (degrees Celsius) |
 
 ## Running the app
 
@@ -36,6 +38,7 @@ Unit Converter - available conversions:
   mi (miles)            <->  km (kilometers)
   ft (feet)             <->  m  (meters)
   in (inches)           <->  cm (centimeters)
+  c  (Celsius)          <->  f  (Fahrenheit)
 
 Enter a number and a unit, e.g. 100 mi. Type q to quit.
 ```
@@ -48,7 +51,7 @@ Enter a value and unit: 100 mi
 Press any key to continue...
 ```
 
-Unit codes aren't case-sensitive. Negative numbers and unknown units show an error message with the list of valid units.
+Unit codes aren't case-sensitive. Temperatures can be negative, down to absolute zero (−273.15 °C or −459.67 °F). Negative values for any other unit, and unknown units, show an error message with the list of valid units.
 
 To quit, type `q` or press Enter on an empty line.
 
