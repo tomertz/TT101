@@ -22,7 +22,8 @@ The console app only works on a computer with Python installed, and it has to be
 
 - **PyScript** loads a Python interpreter into the browser, so the web page uses the same `convert()` function as the console app. The conversion logic is written and tested once, and both versions always give the same results.
 - **GitHub Pages** publishes the page from the repository for free. The page updates automatically after each push to `main`.
-- The page will be available at **https://tomertz.github.io/TT101/**.
+- The page lives in a `converter` folder in the repository, so it will be available at **https://tomertz.github.io/TT101/converter/**. It loads `converter.py` from the repository's main folder, so there is only one copy of the conversion code.
+- The repository's main address, https://tomertz.github.io/TT101/, shows the README, which GitHub Pages displays automatically when there's no web page in the main folder. The README will link to the converter page.
 
 **Trade-off:** the first time someone opens the page, the browser downloads Python, which takes a few seconds. Later visits are faster because the browser keeps a copy.
 
@@ -78,23 +79,23 @@ Add a new "Web version" section after "Platform" that contains the "Approach" an
 
 | File | Change |
 |------|--------|
-| `index.html` | New. The web page, including its layout, styling, and the PyScript code that connects the page to `convert()`. |
+| `converter/index.html` | New. The web page, including its layout, styling, and the PyScript code that connects the page to `convert()`. |
 | `converter.py` | No change expected. If a small change is needed so the page can load it, it must not change the console app's behavior. |
 | `REQUIREMENTS.md` | Add the "Web version" section. |
-| `README.md` | Add the web address and how to try the page on your own computer. |
+| `README.md` | Add a link to the web page and how to try the page on your own computer. |
 
 ## Publishing steps
 
-1. Push `index.html` to the `main` branch.
+1. Merge `converter/index.html` into the `main` branch and push it.
 2. In the repository on GitHub, open **Settings → Pages**, set **Source** to **Deploy from a branch**, choose `main` and the `/ (root)` folder, and select **Save**. This is a one-time step that the repository owner does on the GitHub website.
-3. Wait a minute or two, then open https://tomertz.github.io/TT101/.
+3. Wait a minute or two, then open https://tomertz.github.io/TT101/converter/.
 
 GitHub Pages is free for public repositories, which `tomertz/TT101` is.
 
 ## Testing
 
 - The existing unit tests must still pass.
-- The page will be tested in a browser on this computer before publishing, by running a local web server with `py -m http.server` and opening `http://localhost:8000`.
+- The page will be tested in a browser on this computer before publishing, by running a local web server with `py -m http.server` and opening `http://localhost:8000/converter/`.
 - After publishing, the live page will be checked at the GitHub Pages address.
 
 ## Acceptance criteria
