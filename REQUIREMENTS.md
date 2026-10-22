@@ -108,3 +108,33 @@ The app must not crash on invalid input.
 
 - The "press any key" behavior must work on Windows with a single keypress (no Enter required).
 - On other operating systems, waiting for Enter is an acceptable fallback.
+
+## Web version
+
+A web page version of the converter runs the same `convert()` function from `converter.py` in the browser using PyScript (Pyodide). It's hosted on GitHub Pages at https://tomertz.github.io/TT101/converter/. The page's files are in the `converter` folder.
+
+### Layout
+
+From top to bottom, the page shows the title **Unit Converter**, a number box and a unit dropdown side by side, the result in large text, and the list of available conversions from the startup screen.
+
+### Input
+
+- The user types a number and picks a unit from a dropdown. Each option shows the unit code, its name, and what it converts to, for example `mi (miles) → km`. The default unit is `mi`.
+- There is no Convert button. The result updates as soon as the number or the unit changes.
+- When the number box is empty, no result is shown.
+
+### Invalid values
+
+The same validation rules as the console app apply. Invalid values show this message in place of the result:
+
+```
+Invalid value. Only temperatures (c, f) can be negative, and not below absolute zero.
+```
+
+### Loading
+
+Until Python finishes loading, the number box and dropdown are disabled and the result area shows `Loading converter...`.
+
+### Not included
+
+The web version has no "Press any key to continue..." step and no quit option.

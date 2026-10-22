@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unit Converter</title>
+  <link rel="stylesheet" href="https://pyscript.net/releases/2026.7.3/core.css">
+  <script type="module" src="https://pyscript.net/releases/2026.7.3/core.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px 16px;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: #f4f6f8;
+      color: #1f2933;
+    }
+
+    main {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 24px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+      margin: 0 0 20px;
+      font-size: 1.6rem;
+    }
+
+    .inputs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .inputs label {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1 1 160px;
+      font-size: 0.9rem;
+      color: #52606d;
+    }
+
+    /* 16px or larger stops iPhone Safari from zooming in when a field is tapped. */
+    input,
+    select {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 1.1rem;
+      border: 1px solid #cbd2d9;
+      border-radius: 8px;
+      background: #fff;
+      color: inherit;
+    }
+
+    input:disabled,
+    select:disabled {
+      background: #f0f2f4;
+    }
+
+    #result {
+      min-height: 3.5rem;
+      margin: 24px 0;
+      font-size: 2rem;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+    }
+
+    #result.message {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #52606d;
+    }
+
+    #result.invalid {
+      color: #b42318;
+    }
+
+    h2 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+    }
+
+    #conversions {
+      margin: 0;
+      font-size: 0.9rem;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Unit Converter</h1>
+
+    <div class="inputs">
+      <label>
+        Value
+        <input id="number" type="number" step="any" placeholder="e.g. 100" disabled>
+      </label>
+      <label>
+        Unit
+        <select id="unit" disabled>
+          <option value="lb">lb (pounds) → kg</option>
+          <option value="kg">kg (kilograms) → lb</option>
+          <option value="oz">oz (US fluid ounces) → ml</option>
+          <option value="ml">ml (milliliters) → oz</option>
+          <option value="mi" selected>mi (miles) → km</option>
+          <option value="km">km (kilometers) → mi</option>
+          <option value="ft">ft (feet) → m</option>
+          <option value="m">m (meters) → ft</option>
+          <option value="in">in (inches) → cm</option>
+          <option value="cm">cm (centimeters) → in</option>
+          <option value="c">c (Celsius) → f</option>
+          <option value="f">f (Fahrenheit) → c</option>
+        </select>
+      </label>
+    </div>
+
+    <div id="result" class="message" aria-live="polite">Loading converter...</div>
+
+    <h2>Available conversions</h2>
+    <pre id="conversions"></pre>
+  </main>
+
+  <script type="py" src="./main.py" config="./pyscript.json"></script>
+</body>
+</html>

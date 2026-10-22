@@ -6,7 +6,8 @@
 | **Date** | October 22, 2026 |
 | **Requested by** | tomertz |
 | **Applies to** | [REQUIREMENTS.md](REQUIREMENTS.md) |
-| **Status** | Proposed |
+| **Status** | Approved, implementation waiting for browser test |
+| **Approved** | October 22, 2026, by tomertz |
 
 ## Summary
 
@@ -79,7 +80,9 @@ Add a new "Web version" section after "Platform" that contains the "Approach" an
 
 | File | Change |
 |------|--------|
-| `converter/index.html` | New. The web page, including its layout, styling, and the PyScript code that connects the page to `convert()`. |
+| `converter/index.html` | New. The web page's layout and styling. Uses PyScript release 2026.7.3, which runs Pyodide 314.0.3. |
+| `converter/main.py` | New. The PyScript code that connects the page to `convert()`. |
+| `converter/pyscript.json` | New. PyScript settings that copy `converter.py` into the browser. |
 | `converter.py` | No change expected. If a small change is needed so the page can load it, it must not change the console app's behavior. |
 | `REQUIREMENTS.md` | Add the "Web version" section. |
 | `README.md` | Add a link to the web page and how to try the page on your own computer. |
@@ -97,6 +100,16 @@ GitHub Pages is free for public repositories, which `tomertz/TT101` is.
 - The existing unit tests must still pass.
 - The page will be tested in a browser on this computer before publishing, by running a local web server with `py -m http.server` and opening `http://localhost:8000/converter/`.
 - After publishing, the live page will be checked at the GitHub Pages address.
+
+### Known issue: corporate network filter
+
+On the requester's company network, the Zscaler security filter blocks `python_stdlib.zip`, a file Pyodide needs to start, so the page stays on `Loading converter...`. Other Pyodide files download normally. Because of this:
+
+- The full browser test must be done from a computer or network without Zscaler, such as a home network or a phone on mobile data.
+- Users on the same company network will see the same problem unless the filter allows `https://cdn.jsdelivr.net/pyodide/`.
+- If this becomes a problem, PyScript can use MicroPython instead of Pyodide. Its files do get through the filter, but switching needs its own change request and testing.
+
+The page logic in `converter/main.py` has been tested on this computer by running it in regular Python with a stand-in for the browser.
 
 ## Acceptance criteria
 
