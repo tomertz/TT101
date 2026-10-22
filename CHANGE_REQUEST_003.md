@@ -6,7 +6,7 @@
 | **Date** | October 22, 2026 |
 | **Requested by** | tomertz |
 | **Applies to** | [REQUIREMENTS.md](REQUIREMENTS.md) |
-| **Status** | Approved, implementation waiting for browser test |
+| **Status** | Implemented |
 | **Approved** | October 22, 2026, by tomertz |
 
 ## Summary
@@ -110,6 +110,10 @@ On the requester's company network, the Zscaler security filter blocks `python_s
 - If this becomes a problem, PyScript can use MicroPython instead of Pyodide. Its files do get through the filter, but switching needs its own change request and testing.
 
 The page logic in `converter/main.py` has been tested on this computer by running it in regular Python with a stand-in for the browser.
+
+### Test result
+
+On October 22, 2026, tomertz tested the published page at https://tomertz.github.io/TT101/converter/ from a network without Zscaler, with GitHub Pages publishing from the `cursor/web-version` branch. The page loaded and worked as expected.
 
 ## Acceptance criteria
 
