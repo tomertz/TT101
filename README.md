@@ -55,6 +55,20 @@ Unit codes aren't case-sensitive. Temperatures can be negative, down to absolute
 
 To quit, type `q` or press Enter on an empty line.
 
+## Web version
+
+The converter is also available as a web page at **https://tomertz.github.io/TT101/converter/**. It works in any modern browser, including on phones. The first visit takes a few seconds while the browser downloads Python.
+
+To try the web page on your own computer, run this from the project folder:
+
+```powershell
+py -m http.server
+```
+
+Then open http://localhost:8000/converter/ in a browser.
+
+Some company networks block a file the page needs to load Python, so the page stays on "Loading converter...". If that happens, try a different network.
+
 ## Running the tests
 
 ```powershell
